@@ -5,7 +5,8 @@ import {Text, Button } from 'react-native-elements'
 export default class Deck extends React.Component {
 
   render() {
-    const {item} = this.props.navigation.state.params
+    const { item } = this.props.navigation.state.params
+    const { navigate } = this.props.navigation
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
@@ -13,8 +14,8 @@ export default class Deck extends React.Component {
           <Text>{`${item.questions.length} cards`}</Text>
         </View>
         <View style={{flex:1, justifyContent: 'center'}}>
-          <Button title='Add Card' borderRadius={6}/>
-          <Button title='Start Quiz' borderRadius={6}/>
+          <Button title='Add Card' borderRadius={6} />
+          <Button title='Start Quiz' borderRadius={6} onPress={() => navigate('Quiz',{item:item})}/>
         </View>
       </View>
     )

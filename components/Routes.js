@@ -19,7 +19,7 @@ export const DeckStack = StackNavigator({
   Quiz: {
     screen: QuizScreen,
     navigationOptions: {
-      title: 'Invite a friend',
+      title: 'Quiz',
     }
   },
 },
@@ -75,4 +75,3 @@ export const Main = TabNavigator({
     },
   },
 })
-
