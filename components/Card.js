@@ -4,17 +4,20 @@ import {
   Text,
   View,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Animated,
   Dimensions,
 } from 'react-native';
 
 export default class Card extends Component {
-
+  state={
+    frontActive: true
+  }
   componentWillMount() {
-    this.animatedValue = new Animated.Value(0);
-    this.value = 0;
+    this.animatedValue = new Animated.Value(0)
+    this.value = 0
     this.animatedValue.addListener(({ value }) => {
-      this.value = value;
+      this.value = value
     })
     this.frontInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
@@ -25,57 +28,78 @@ export default class Card extends Component {
       outputRange: ['180deg', '360deg']
     })
   }
-  flipCard() {
+  flipCard = () => {
     if (this.value >= 90) {
       Animated.spring(this.animatedValue,{
         toValue: 0,
         friction: 8,
         tension: 10
-      }).start();
+      }).start()
+      this.setState({frontActive:true})
     } else {
       Animated.spring(this.animatedValue,{
         toValue: 180,
         friction: 8,
         tension: 10
-      }).start();
+      }).start()
+      this.setState({frontActive:false})
     }
 
   }
 
   render() {
-    const { question } = this.props
+    const {frontActive} = this.state
+    const { question, onCorrect, onIncorrect } = this.props
+
     const frontAnimatedStyle = {
       transform: [
+        { perspective: 800},
         { rotateY: this.frontInterpolate}
       ]
     }
     const backAnimatedStyle = {
       transform: [
+        { perspective: 800},
         { rotateY: this.backInterpolate }
       ]
     }
     return (
       <View>
         <View>
-          <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-            <Text style={styles.flipText}>
-              {question.question}
-            </Text>
+          <Animated.View style={[styles.flipCard, frontAnimatedStyle, frontActive && {zIndex:10}]}>
+              <Text style={styles.flipText}>
+                {question.question}
+              </Text>
+              <TouchableOpacity onPress={this.flipCard}>
+                <Text style={styles.flipButton}>Answer</Text>
+              </TouchableOpacity>
+
           </Animated.View>
-          <Animated.View style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
-            <Text style={styles.flipText}>
-              {question.answer}
-            </Text>
+          <Animated.View style={[styles.flipCard, backAnimatedStyle, styles.flipCardBack, !frontActive && {zIndex:10}]}>
+
+              <Text style={styles.flipText}>
+                {question.answer}
+              </Text>
+              <TouchableOpacity onPress={this.flipCard}>
+                <Text style={styles.flipButton}>Question</Text>
+              </TouchableOpacity>
+
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={styles.btn} onPress={() => onCorrect()}>
+                <Text style={styles.txtBtn}>Correct</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.btn} onPress={() => onIncorrect()}>
+                <Text style={styles.txtBtn}>Incorrect</Text>
+              </TouchableOpacity>
+            </View>
           </Animated.View>
         </View>
-        <TouchableOpacity onPress={() => this.flipCard()}>
-          <Text>Flip!</Text>
-        </TouchableOpacity>
+
       </View>
     )
   }
 }
-
+const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -83,13 +107,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   flipCard: {
-    width: 300,
-    height: 400,
+    width: width - 60,
+    height: height - 200,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'blue',
     backfaceVisibility: 'hidden',
     borderRadius: 8,
+    zIndex: 1
   },
   flipCardBack: {
     backgroundColor: "red",
@@ -99,9 +124,34 @@ const styles = StyleSheet.create({
   },
   flipText: {
     width: 200,
-    fontSize: 20,
+    fontSize: 24,
     textAlign: 'center',
     color: 'white',
+    fontWeight: 'bold',
+  },
+  flipButton:{
+    marginVertical: 20,
+    fontSize: 16,
+    textAlign: 'center',
+    color: 'white',
+  },
+  buttonRow:{
+    width: width - 60,
+    flexDirection:'row',
+    margin: 20,
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 20
+  },
+  btn:{
+    padding:15,
+    backgroundColor: 'white',
+    borderRadius: 4,
+    margin: 10,
+  },
+  txtBtn:{
+    color: 'red',
+    fontSize: 18,
     fontWeight: 'bold',
   }
 })
