@@ -35,7 +35,7 @@ class DeckList extends PureComponent {
   render() {
     const {decks} = this.state
     return (
-      decks ? 
+      decks ?
         <View style={{paddingTop:0, backgroundColor:'white', flex: 1}}>
           <FlatList
             data={decks}

@@ -46,9 +46,24 @@ export default class Card extends Component {
     }
 
   }
+  resetCard = () =>{
+    Animated.timing(this.animatedValue,{
+      toValue: 0,
+      delay: 300,
+      duration: 10
+    }).start()
+  }
+  onCorrect = () =>{
+    this.resetCard()
+    this.props.onCorrect()
+  }
+  onIncorrect = () =>{
+    this.resetCard()
+    this.props.onIncorrect()
+  }
 
   render() {
-    const {frontActive} = this.state
+    const { frontActive } = this.state
     const { question, onCorrect, onIncorrect } = this.props
 
     const frontAnimatedStyle = {
@@ -64,7 +79,6 @@ export default class Card extends Component {
       ]
     }
     return (
-      <View>
         <View>
           <Animated.View style={[styles.flipCard, frontAnimatedStyle, frontActive && {zIndex:10}]}>
               <Text style={styles.flipText}>
@@ -85,17 +99,15 @@ export default class Card extends Component {
               </TouchableOpacity>
 
             <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.btn} onPress={() => onCorrect()}>
+              <TouchableOpacity style={styles.btn} onPress={this.onCorrect}>
                 <Text style={styles.txtBtn}>Correct</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btn} onPress={() => onIncorrect()}>
+              <TouchableOpacity style={styles.btn} onPress={this.onIncorrect}>
                 <Text style={styles.txtBtn}>Incorrect</Text>
               </TouchableOpacity>
             </View>
           </Animated.View>
         </View>
-
-      </View>
     )
   }
 }
@@ -111,19 +123,19 @@ const styles = StyleSheet.create({
     height: height - 200,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: 'lightseagreen',
     backfaceVisibility: 'hidden',
     borderRadius: 8,
     zIndex: 1
   },
   flipCardBack: {
-    backgroundColor: "red",
+    backgroundColor: "tomato",
     position: "absolute",
     top: 0,
     borderRadius: 8,
   },
   flipText: {
-    width: 200,
+    width: width - 120,
     fontSize: 24,
     textAlign: 'center',
     color: 'white',
@@ -141,16 +153,17 @@ const styles = StyleSheet.create({
     margin: 20,
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 20
+    bottom: 0
   },
   btn:{
-    padding:15,
+    paddingVertical:15,
+    paddingHorizontal:25,
     backgroundColor: 'white',
     borderRadius: 4,
     margin: 10,
   },
   txtBtn:{
-    color: 'red',
+    color: 'tomato',
     fontSize: 18,
     fontWeight: 'bold',
   }

@@ -12,6 +12,9 @@ import NewQuizScreen from './NewQuiz'
 export const DeckStack = StackNavigator({
   DeckList: {
     screen: DeckListScreen,
+    navigationOptions: {
+      title: 'Decks',
+    }
   },
   Deck: {
     screen: DeckScreen,
@@ -26,7 +29,7 @@ export const DeckStack = StackNavigator({
 {
   navigationOptions: {
     headerTintColor: 'white',
-    headerStyle: { backgroundColor: 'deepskyblue', borderWidth: 0},
+    headerStyle: { backgroundColor: 'lightseagreen', borderBottomWidth: 0,},
   }
 })
 
@@ -42,7 +45,7 @@ export const NewStack = StackNavigator({
 {
   navigationOptions: {
     headerTintColor: 'white',
-    headerStyle: { backgroundColor: 'deepskyblue', borderWidth: 0},
+    headerStyle: { backgroundColor: 'lightseagreen', borderWidth: 0},
   }
 })
 
@@ -63,12 +66,12 @@ export const Main = TabNavigator({
   },
 },{
   tabBarOptions: {
-    activeTintColor: 'deepskyblue',
+    activeTintColor: 'lightseagreen',
     labelStyle: {
       fontSize: 11,
     },
     style: {
-      borderTopColor: 'deepskyblue',
+      borderTopColor: 'lightseagreen',
       borderTopWidth: 1,
       backgroundColor: 'white',
       paddingTop: 5,

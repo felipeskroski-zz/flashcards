@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import {Text, Button } from 'react-native-elements'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Text } from 'react-native-elements'
+import styles from '../utils/styles'
 
 export default class Deck extends React.Component {
 
@@ -8,14 +9,18 @@ export default class Deck extends React.Component {
     const { item } = this.props.navigation.state.params
     const { navigate } = this.props.navigation
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={[styles.container, {paddingBottom:80}]}>
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text h1>{item.title}</Text>
-          <Text>{`${item.questions.length} cards`}</Text>
+          <Text style={{fontSize: 52, fontWeight:'100',}}>{item.title}</Text>
+          <Text style={{fontSize: 18, fontWeight:'300', color: '#999'}}>{`${item.questions.length} cards`}</Text>
         </View>
-        <View style={{flex:1, justifyContent: 'center'}}>
-          <Button title='Add Card' borderRadius={6} />
-          <Button title='Start Quiz' borderRadius={6} onPress={() => navigate('Quiz',{item:item})}/>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.btn}>
+            <Text style={styles.txtBtn}>Add Card</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={() => navigate('Quiz',{item:item})}>
+            <Text style={styles.txtBtn}>Start Quiz</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )

@@ -1,19 +1,24 @@
 import React, { Component } from 'react'
 import {
-  Text,
   View,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
   ScrollView
 } from 'react-native'
+import { Text } from 'react-native-elements'
 import Card from './Card'
+import styles from '../utils/styles'
 
 const {height, width} = Dimensions.get('window');
 export default class Quiz extends Component {
   state = {
     currentCard: 0,
     corrects: 0,
+    deck: null,
+    reset: 'test'
+  }
+  componentDidMount(){
+
   }
   onCorrect(){
     this.setState({corrects: this.state.corrects + 1})
@@ -22,37 +27,47 @@ export default class Quiz extends Component {
   onIncorrect(){
     this.nextCard()
   }
+  restartQuiz = () => {
+    this.setState({currentCard: 0, reset: true, corrects: 0})
+    this._list.scrollTo({x:0, y:0, animated: true})
+  }
   nextCard(){
     const {currentCard} = this.state
-
     this._list.scrollTo({x: (width * (currentCard+1)), y:0, animated: true})
     this.setState({currentCard: currentCard + 1})
   }
   render() {
     const { item } = this.props.navigation.state.params
-    const q = item.questions[this.state.currentCard-1]
+    const { goBack } = this.props.navigation
+    const { corrects, reset } = this.state
     return (
       <ScrollView horizontal scrollEnabled={false} style={{flex:1, flexDirection:'row'}} ref={component => this._list = component}>
         {item.questions.map((q,i)=>(
           <View style={styles.container} key={i}>
-            <Text>{`${i+1} of ${item.questions.length}`}</Text>
-            <Card question={q} style={{zIndex: 10}} onCorrect={()=>this.onCorrect()} onIncorrect={()=>this.onIncorrect()}/>
+            <Text style={styles.cardCounter}>{`${i+1} of ${item.questions.length}`}</Text>
+            <Card
+              question={q}
+              style={{zIndex: 10}}
+              onCorrect={()=>this.onCorrect()}
+              onIncorrect={()=>this.onIncorrect()}
+              reser={reset}
+            />
           </View>
         ))}
-        <View style={styles.container}>
-          <Text>Results</Text>
-          <Text>1/3 Corrects</Text>
+        <View style={[styles.container, {paddingBottom:80}]}>
+          <Text h3>Results</Text>
+          <Text style={{fontSize: 100, fontWeight:'100',}}>{`${corrects} of ${item.questions.length}`}</Text>
+          <Text>Correct</Text>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={styles.btn} onPress={this.restartQuiz}>
+              <Text style={styles.txtBtn}>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btn} onPress={() => goBack(null)}>
+              <Text style={styles.txtBtn}>Back to Deck</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: width,
-    alignItems: "center",
-    justifyContent: "center",
-  }
-})
