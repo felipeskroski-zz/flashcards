@@ -12,6 +12,11 @@ class DeckList extends PureComponent {
   }
 
   componentDidMount(){
+    this._refresh()
+  }
+
+  _refresh = () => {
+    console.log('refreshed')
     getDecks().then((result) => this.setState({decks: this.decksToArray(result)}))
   }
 
@@ -27,7 +32,7 @@ class DeckList extends PureComponent {
       <ListItem
         title={item.title}
         subtitle={`${item.questions.length} cards`}
-        onPress={() => navigate('Deck',{item:item})}
+        onPress={() => navigate('Deck',{item:item, refreshDecks:this._refresh})}
       />
     )
   }

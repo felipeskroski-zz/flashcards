@@ -10,7 +10,13 @@ export default class Deck extends React.Component {
   }
 
   componentDidMount(){
+    this._refresh()
+  }
+  _refresh = () =>{
+    const { refreshDecks } = this.props.navigation.state.params
     const { title } = this.props.navigation.state.params.item
+    console.log('refreshed2')
+    refreshDecks && refreshDecks()
     getDeck(title).then((result) => this.setState({deck: result}))
   }
   render() {
@@ -24,7 +30,7 @@ export default class Deck extends React.Component {
           <Text style={{fontSize: 18, fontWeight:'300', color: '#999'}}>{`${deck.questions.length} cards`}</Text>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.btn} onPress={() => navigate('NewCard',{item:deck})}>
+          <TouchableOpacity style={styles.btn} onPress={() => navigate('NewCard',{item:deck, refreshDecks:this._refresh})}>
             <Text style={styles.txtBtn}>Add Card</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btn} onPress={() => navigate('Quiz',{item:deck})}>

@@ -28,9 +28,12 @@ export default class NewCard extends React.Component {
       question,
       answer
     }
+    const { refreshDecks } = this.props.navigation.state.params
+
     addCardToDeck(item.title, card)
     .then((result) => {
       this.setState({loading: false})
+      refreshDecks && refreshDecks()
       Alert.alert(
         'Success',
         'Your card was added to the deck.',
