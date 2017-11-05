@@ -37,23 +37,29 @@ export function getDecks(){
   .then(formatResults)
 }
 
-//take in a single id argument and return the deck associated with that id.  
+//take in a single id argument and return the deck associated with that id.
 export function getDeck(id){
-	return AsyncStorage.getItem(CALENDAR_STORAGE_KEY[id])
-	.then((results) => JSON.parse(results))
+	return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+	.then((results) => JSON.parse(results)[id])
 }
-//take in a single title argument and add it to the decks. 
+//take in a single title argument and add it to the decks.
 export function saveDeckTitle(title){
-	return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, 
+	return AsyncStorage.mergeItem(DECKS_STORAGE_KEY,
 		JSON.stringify(
 			{[title]: {title: title}})
 		)
 }
 
-//take in two arguments, title and card, and will add the card to the list 
-//of questions for the deck with the associated title. 
+//take in two arguments, title and card, and will add the card to the list
+//of questions for the deck with the associated title.
 export function addCardToDeck(title, card) {
-  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY[title].questions, JSON.stringify(card))
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+	.then((results) => {
+    const data = JSON.parse(results)
+    console.log(data[title])
+    data[title].questions.push(card)
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+  })
 }
 
 

@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightseagreen',
     borderRadius: 4,
     margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   txtBtn:{
     color: 'white',
@@ -33,6 +35,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '100',
     marginBottom: 20,
+  },
+  textField:{
+    height: 50,
+    borderRadius: 4,
+    backgroundColor: 'whitesmoke',
+    borderColor:'#ccc',
+    borderWidth: 1,
+    padding: 10,
+    margin: 20,
+    fontSize: 18,
+    alignSelf: 'stretch'
+
   }
 })
 

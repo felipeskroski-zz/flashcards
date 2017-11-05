@@ -8,6 +8,7 @@ import {
 import { Text } from 'react-native-elements'
 import Card from './Card'
 import styles from '../utils/styles'
+import {getDeck} from '../utils/api'
 
 const {height, width} = Dimensions.get('window');
 export default class Quiz extends Component {
@@ -18,7 +19,8 @@ export default class Quiz extends Component {
     reset: 'test'
   }
   componentDidMount(){
-
+    const { title } = this.props.navigation.state.params.item
+    getDeck(title).then((result) => this.setState({deck: result}))
   }
   onCorrect(){
     this.setState({corrects: this.state.corrects + 1})
@@ -37,14 +39,15 @@ export default class Quiz extends Component {
     this.setState({currentCard: currentCard + 1})
   }
   render() {
-    const { item } = this.props.navigation.state.params
+    const { deck } = this.state
     const { goBack } = this.props.navigation
     const { corrects, reset } = this.state
     return (
+      deck &&
       <ScrollView horizontal scrollEnabled={false} style={{flex:1, flexDirection:'row'}} ref={component => this._list = component}>
-        {item.questions.map((q,i)=>(
+        {deck.questions.map((q,i)=>(
           <View style={styles.container} key={i}>
-            <Text style={styles.cardCounter}>{`${i+1} of ${item.questions.length}`}</Text>
+            <Text style={styles.cardCounter}>{`${i+1} of ${deck.questions.length}`}</Text>
             <Card
               question={q}
               style={{zIndex: 10}}
@@ -56,7 +59,7 @@ export default class Quiz extends Component {
         ))}
         <View style={[styles.container, {paddingBottom:80}]}>
           <Text h3>Results</Text>
-          <Text style={{fontSize: 100, fontWeight:'100',}}>{`${corrects} of ${item.questions.length}`}</Text>
+          <Text style={{fontSize: 100, fontWeight:'100',}}>{`${corrects} of ${deck.questions.length}`}</Text>
           <Text>Correct</Text>
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.btn} onPress={this.restartQuiz}>

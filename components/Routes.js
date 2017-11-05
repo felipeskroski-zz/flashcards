@@ -6,7 +6,7 @@ import DeckListScreen from './DeckList'
 import DeckScreen from './Deck'
 import QuizScreen from './Quiz'
 import NewDeckScreen from './NewDeck'
-import NewQuizScreen from './NewQuiz'
+import NewCardScreen from './NewCard'
 
 
 export const DeckStack = StackNavigator({
@@ -25,6 +25,12 @@ export const DeckStack = StackNavigator({
       title: 'Quiz',
     }
   },
+  NewCard: {
+    screen: NewCardScreen,
+    navigationOptions: {
+      title: 'NewCard',
+    }
+  },
 },
 {
   navigationOptions: {
@@ -37,9 +43,7 @@ export const NewStack = StackNavigator({
   NewDeck: {
     screen: NewDeckScreen,
   },
-  NewQuiz: {
-    screen: NewQuizScreen,
-  },
+
 
 },
 {
