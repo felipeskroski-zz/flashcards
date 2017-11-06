@@ -12,9 +12,14 @@ export default class Deck extends React.Component {
   componentDidMount(){
     this._refresh()
   }
+  componentDidUpdate(prevProps){
+    if(prevProps !== this.props && this.props.screenProps.refresh){
+      this._refresh()
+    }
+  }
   _refresh = () =>{
     const { refreshDecks } = this.props.navigation.state.params
-    const { title } = this.props.navigation.state.params.item
+    const { title } = this.props.navigation.state.params
     refreshDecks && refreshDecks()
     getDeck(title).then((result) => this.setState({deck: result}))
   }

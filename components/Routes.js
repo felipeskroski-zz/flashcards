@@ -38,7 +38,10 @@ export const DeckStack = StackNavigator({
   navigationOptions: {
     headerTintColor: 'white',
     headerStyle: { backgroundColor: colors.green, borderBottomWidth: 0,},
-  }
+  },
+  initialRouteName: 'DeckList',
+  backBehavior: 'none'
+
 })
 
 export const NewStack = StackNavigator({
