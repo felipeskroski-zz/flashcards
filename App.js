@@ -5,16 +5,20 @@ import {setNotifications} from './utils/notifications'
 
 
 export default class App extends React.Component {
+  state={
+    refresh: false
+  }
   componentDidMount(){
     setNotifications()
   }
   forceRefresh = () => {
     console.log('function called')
     this.forceUpdate()
+    this.setState({refresh: true})
   }
   render() {
     return (
-      <Main screenProps={{forceRefresh: this.forceRefresh}}/>
+      <Main screenProps={{forceRefresh: this.forceRefresh, refresh:this.state.refresh}}/>
     )
   }
 }

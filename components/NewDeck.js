@@ -32,16 +32,15 @@ export default class NewDeck extends React.Component {
     saveDeckTitle(title)
     .then((result) => {
       this.setState({loading: false, title: ''})
-
+      navigate('Deck',{title:title, refreshDecks:false})
       forceRefresh()
-      navigate('DeckList')
     })
 
   }
   render() {
     const {loading} = this.state
     const { navigate } = this.props.navigation
-    const { forceRefresh } = this.props.screenProps
+
     return (
 
         <KeyboardAvoidingView
@@ -59,11 +58,7 @@ export default class NewDeck extends React.Component {
           onChangeText={(title) => this.setState({title})}
         />
         <TouchableOpacity style={[styles.btn,{alignSelf:'stretch', marginHorizontal:20,}]} onPress={this.handleSubmit}>
-          <Text style={styles.txtBtn}>{loading ? 'Adding...' : 'Add question'}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.btn,{alignSelf:'stretch', marginHorizontal:20,}]} onPress={() => forceRefresh()}>
-          <Text style={styles.txtBtn}>test nav</Text>
+          <Text style={styles.txtBtn}>{loading ? 'Adding...' : 'Add Deck'}</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
 

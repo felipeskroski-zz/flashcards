@@ -7,10 +7,6 @@ class DeckList extends PureComponent {
   static navigationOptions = {
     title:'Decks',
     headerLeft: null,
-    tabBarOnPress: (scene, jumpToIndex) => {
-      console.log('onPress:', scene.route)
-      jumpToIndex(scene.index)
-    },
   }
   state={
     decks: null
@@ -21,6 +17,12 @@ class DeckList extends PureComponent {
   }
   componentDidUpdate(){
     console.log(this.props)
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps !== this.props && this.props.screenProps.refresh){
+      this._refresh()
+    }
   }
 
   _refresh = () => {
@@ -40,7 +42,7 @@ class DeckList extends PureComponent {
       <ListItem
         title={item.title}
         subtitle={item.questions && `${item.questions.length} cards`}
-        onPress={() => navigate('Deck',{item:item, refreshDecks:this._refresh})}
+        onPress={() => navigate('Deck',{title:item.title, refreshDecks:this._refresh})}
       />
     )
   }
