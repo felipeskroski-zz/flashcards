@@ -7,6 +7,7 @@ import DeckScreen from './Deck'
 import QuizScreen from './Quiz'
 import NewDeckScreen from './NewDeck'
 import NewCardScreen from './NewCard'
+import {colors} from '../utils/styles'
 
 
 export const DeckStack = StackNavigator({
@@ -36,7 +37,7 @@ export const DeckStack = StackNavigator({
 {
   navigationOptions: {
     headerTintColor: 'white',
-    headerStyle: { backgroundColor: 'lightseagreen', borderBottomWidth: 0,},
+    headerStyle: { backgroundColor: colors.green, borderBottomWidth: 0,},
   }
 })
 
@@ -54,7 +55,7 @@ export const NewStack = StackNavigator({
 {
   navigationOptions: {
     headerTintColor: 'white',
-    headerStyle: { backgroundColor: 'lightseagreen', borderWidth: 0},
+    headerStyle: { backgroundColor: colors.green, borderWidth: 0},
   }
 })
 
@@ -77,12 +78,12 @@ export const Main = TabNavigator({
   },
 },{
   tabBarOptions: {
-    activeTintColor: 'lightseagreen',
+    activeTintColor: colors.green,
     labelStyle: {
       fontSize: 11,
     },
     style: {
-      borderTopColor: 'lightseagreen',
+      borderTopColor: colors.green,
       borderTopWidth: 1,
       backgroundColor: 'white',
       paddingTop: 5,

@@ -34,7 +34,7 @@ export default class NewDeck extends React.Component {
       this.setState({loading: false, title: ''})
 
       forceRefresh()
-      navigate('DeckList')
+      navigate('Deck')
     })
 
   }
