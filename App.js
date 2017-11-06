@@ -12,7 +12,6 @@ export default class App extends React.Component {
     setNotifications()
   }
   forceRefresh = () => {
-    console.log('function called')
     this.forceUpdate()
     this.setState({refresh: true})
   }

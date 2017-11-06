@@ -63,11 +63,13 @@ export default class NewCard extends React.Component {
           style={[styles.textField,{marginBottom:0}]}
           placeholder="Add Question"
           onChangeText={(question) => this.setState({question})}
+          underlineColorAndroid={'transparent'}
         />
         <TextInput
           style={styles.textField}
           placeholder="Add Answer"
           onChangeText={(answer) => this.setState({answer})}
+          underlineColorAndroid={'transparent'}
         />
         <TouchableOpacity style={[styles.btn,{alignSelf:'stretch', marginHorizontal:20,}]} onPress={this.handleSubmit}>
           <Text style={styles.txtBtn}>{loading ? 'Adding...' : 'Add question'}</Text>

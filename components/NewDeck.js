@@ -10,7 +10,6 @@ export default class NewDeck extends React.Component {
 
     tabBarOnPress: (scene, jumpToIndex) => {
       navigation.setParams({refresh:true})
-      console.log('onPress:', scene.route)
       jumpToIndex(scene.index);
     },
   })
@@ -56,6 +55,7 @@ export default class NewDeck extends React.Component {
           style={[styles.textField,{marginBottom:0}]}
           placeholder="Deck name"
           onChangeText={(title) => this.setState({title})}
+          underlineColorAndroid={'transparent'}
         />
         <TouchableOpacity style={[styles.btn,{alignSelf:'stretch', marginHorizontal:20,}]} onPress={this.handleSubmit}>
           <Text style={styles.txtBtn}>{loading ? 'Adding...' : 'Add Deck'}</Text>

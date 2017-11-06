@@ -15,9 +15,6 @@ class DeckList extends PureComponent {
   componentDidMount(){
     this._refresh()
   }
-  componentDidUpdate(){
-    console.log(this.props)
-  }
 
   componentDidUpdate(prevProps){
     if(prevProps !== this.props && this.props.screenProps.refresh){
@@ -26,7 +23,6 @@ class DeckList extends PureComponent {
   }
 
   _refresh = () => {
-    console.log('refreshed')
     getDecks().then((result) => this.setState({decks: this.decksToArray(result)}))
   }
 

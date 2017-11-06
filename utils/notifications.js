@@ -27,7 +27,6 @@ const tomorrow = () =>{
 }
 
 export function setNotifications() {
-  console.log('setting up notifications')
   AsyncStorage.getItem(DECKS_NOTIFICATIONS_KEY)
   .then(n=>JSON.parse(n))
   .then(n=>(
@@ -35,7 +34,6 @@ export function setNotifications() {
     Permissions.askAsync(Permissions.NOTIFICATIONS)
     .then(({status})=>{
       status==='granted' &&
-        console.log('status granted')
         Notifications.cancelAllScheduledNotificationsAsync()
         Notifications.scheduleLocalNotificationAsync(
           notification,
