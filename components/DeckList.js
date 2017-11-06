@@ -8,6 +8,7 @@ class DeckList extends PureComponent {
     title:'Decks',
     headerLeft: null,
     tabBarOnPress: (scene, jumpToIndex) => {
+      console.log('onPress:', scene.route)
       jumpToIndex(scene.index)
     },
   }
@@ -18,8 +19,12 @@ class DeckList extends PureComponent {
   componentDidMount(){
     this._refresh()
   }
+  componentDidUpdate(){
+    console.log(this.props)
+  }
 
   _refresh = () => {
+    console.log('refreshed')
     getDecks().then((result) => this.setState({decks: this.decksToArray(result)}))
   }
 

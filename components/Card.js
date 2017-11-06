@@ -28,9 +28,6 @@ export default class Card extends Component {
       outputRange: ['180deg', '360deg']
     })
   }
-  componentWillUnmount(){
-    this.animatedValue.removeAllListeners()
-  }
   flipCard = () => {
     if (this.value >= 90) {
       Animated.spring(this.animatedValue,{

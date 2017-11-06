@@ -5,7 +5,7 @@ export const DECKS_NOTIFICATIONS_KEY = 'QuizCards:Notifications'
 export function removeTodaysNotification () {
     // remove all Notifications and set them again to start from tomorrow
     console.log('removeTodaysNotification')
-    return AsyncStorage.removeItem(DECKS_NOTIFICATIONS_KEY).then(
+    return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
         Notifications.cancelAllScheduledNotificationsAsync
     ).then(setNotifications())
 }
@@ -28,6 +28,7 @@ const tomorrow = () =>{
 }
 
 export function setNotifications() {
+  console.log('setting up notifications')
   AsyncStorage.getItem(DECKS_NOTIFICATIONS_KEY)
   .then(n=>JSON.parse(n))
   .then(n=>(
