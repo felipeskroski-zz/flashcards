@@ -6,6 +6,11 @@ import {getDecks} from '../utils/api'
 class DeckList extends PureComponent {
   static navigationOptions = {
     title:'Decks',
+    headerLeft: null,
+    tabBarOnPress: (scene, jumpToIndex) => {
+      console.log('onPress:', scene.route)
+      jumpToIndex(scene.index)
+    },
   }
   state={
     decks: null
@@ -13,6 +18,9 @@ class DeckList extends PureComponent {
 
   componentDidMount(){
     this._refresh()
+  }
+  componentDidUpdate(){
+    console.log(this.props)
   }
 
   _refresh = () => {
@@ -31,7 +39,7 @@ class DeckList extends PureComponent {
     return (
       <ListItem
         title={item.title}
-        subtitle={`${item.questions.length} cards`}
+        subtitle={item.questions && `${item.questions.length} cards`}
         onPress={() => navigate('Deck',{item:item, refreshDecks:this._refresh})}
       />
     )
@@ -47,7 +55,6 @@ class DeckList extends PureComponent {
             keyExtractor={this._keyExtractor}
             renderItem={this._renderItem}
           />
-          <Text>{JSON.stringify(this.state.decks)}</Text>
         </View>
       :
         <View style={{paddingTop:0, backgroundColor:'white', flex: 1}}>

@@ -9,6 +9,7 @@ import { Text } from 'react-native-elements'
 import Card from './Card'
 import styles from '../utils/styles'
 import {getDeck} from '../utils/api'
+import {removeTodaysNotification} from '../utils/notifications'
 
 const {height, width} = Dimensions.get('window');
 export default class Quiz extends Component {
@@ -34,9 +35,13 @@ export default class Quiz extends Component {
     this._list.scrollTo({x:0, y:0, animated: true})
   }
   nextCard(){
-    const {currentCard} = this.state
+    const {currentCard, deck} = this.state
     this._list.scrollTo({x: (width * (currentCard+1)), y:0, animated: true})
     this.setState({currentCard: currentCard + 1})
+    if (currentCard+1 >= deck.questions.length) {
+      //don't send notification if they finished a quiz
+			removeTodaysNotification()
+    }
   }
   render() {
     const { deck } = this.state

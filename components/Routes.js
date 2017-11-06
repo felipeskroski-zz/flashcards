@@ -1,6 +1,6 @@
 import React from 'react'
 import { TabNavigator, StackNavigator} from 'react-navigation'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/Feather'
 
 import DeckListScreen from './DeckList'
 import DeckScreen from './Deck'
@@ -29,6 +29,7 @@ export const DeckStack = StackNavigator({
     screen: NewCardScreen,
     navigationOptions: {
       title: 'NewCard',
+
     }
   },
 },
@@ -42,6 +43,10 @@ export const DeckStack = StackNavigator({
 export const NewStack = StackNavigator({
   NewDeck: {
     screen: NewDeckScreen,
+    navigationOptions: {
+      title: 'NewDeck',
+      header: null
+    }
   },
 
 
@@ -53,19 +58,21 @@ export const NewStack = StackNavigator({
   }
 })
 
+
+
 export const Main = TabNavigator({
   Decks: {
     screen: DeckStack,
     navigationOptions: {
       tabBarLabel: 'Decks',
-      tabBarIcon: ({ tintColor }) => <Icon name="info-outline" size={35} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name="layers" size={35} color={tintColor} />
     },
   },
   NewDeck: {
     screen: NewStack,
     navigationOptions: {
       tabBarLabel: 'New Deck',
-      tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={35} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name="file-plus" size={35} color={tintColor} />
     },
   },
 },{

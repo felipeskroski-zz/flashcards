@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native'
+
 export const DECKS_STORAGE_KEY = 'QuizCards:Decks'
 
 
@@ -46,7 +47,7 @@ export function getDeck(id){
 export function saveDeckTitle(title){
 	return AsyncStorage.mergeItem(DECKS_STORAGE_KEY,
 		JSON.stringify(
-			{[title]: {title: title}})
+			{[title]: {title: title, questions:[]}})
 		)
 }
 
@@ -56,15 +57,12 @@ export function addCardToDeck(title, card) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
 	.then((results) => {
     const data = JSON.parse(results)
-    console.log(data[title])
     data[title].questions.push(card)
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
   })
 }
 
-
-
-export function formatResults(results) {
+function formatResults(results) {
   return results === null
     ? setDummyData()
     : JSON.parse(results)
@@ -74,3 +72,7 @@ function setDummyData () {
   AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(deckData))
   return deckData
 }
+
+
+// Push notifications are generated at a specific time if the user hasn't
+// completed at least one quiz for that day.
